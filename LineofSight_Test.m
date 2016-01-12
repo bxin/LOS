@@ -1,6 +1,6 @@
 function [] = LineofSight_Test(iTest)
 
-%iTest = 1, 2
+%iTest = 1, 2   for two test examples
 
 %% test input #1
 % this is an example 24x1 x-vector, dy=1um for all 4 optical elements
