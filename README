@@ -1,5 +1,5 @@
 This code calculates the Line of Sight (LOS) change using 
-[dz dx dy Rx Ry Rz] for M1, M2, M3, Cam in the Terrestrial Coordinate System.
+[dx dy dz Rx Ry Rz] for M1, M2, M3, Cam in the Terrestrial Coordinate System.
 
 LineofSight_Test.m 		demonstrate how to use the code. 
 LineofSight.m			main code that takes the output of make_4x4_TCRS.m and 
