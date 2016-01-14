@@ -12,6 +12,7 @@ CamCGz = (cameraPos(3)-altitudeCenter(3))*sqrt(2)*1000;
 
 stickLen = [-1895-m1m3CGz 6156-1895-m2CGz -1895-233.8-m1m3CGz 3398-1895-CamCGz]*1000;%in um
 vxnew = zeros(length(vx),1);
+vx = [vx(1:12); vx(1:6); vx(13:18)]; %insert m3motion, which is same as m1motion
 
 for i=1:4 % for M1, M2, M3, Cam
     tRx = vx((i-1)*6+4); %t is for theta

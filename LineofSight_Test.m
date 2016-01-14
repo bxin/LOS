@@ -5,17 +5,22 @@ function [] = LineofSight_Test(iTest)
 %% test input #1
 % this is an example 24x1 x-vector, dy=1um for all 4 optical elements
 if iTest==1
+    alpha=0; %for tests
+    beta=0;
+
     angleAS = 0;
     d = 1;
     vx = [0 d 0 0 0 0 0 d 0 0 0 0 0 d 0 0 0 0 0 d 0 0 0 0 ]';
     % vx = [d 0 0 0 0 0 d 0 0 0 0 0 d 0 0 0 0 0 d 0 0 0 0 0 ]';
     % vx = [0 0 d 0 0 0 0 0 d 0 0 0 0 0 d 0 0 0 0 0 d 0 0 0 ]';
-    alpha=0; %for tests
-    beta=0;
 
 %% test input #2
 % a system-wide tilt around x-axis of TCRS.
 elseif iTest==2
+    
+    alpha=0; %for tests
+    beta=0;
+
     dM1M2 = 6628-472; % =6156, in mm (zemax has 6156.2006)
     dM1Cam = 5336-1938; % = 3398 in mm (zemax has 3398.6)
     dM1M3 = -233.8; %in mm
@@ -32,13 +37,13 @@ elseif iTest==2
     M3Motion = [0 -dM3AZ*sin(angleRad)*1000 -dM3AZ*(1-cos(angleRad))*1000 angleAS 0 0];
     CamMotion = [0 -dCamAZ*sin(angleRad)*1000 -dCamAZ*(1-cos(angleRad))*1000 angleAS 0 0];
     vx = [M1Motion M2Motion M3Motion CamMotion]';
-    
-    alpha=0; %for tests
-    beta=0;
 
 elseif iTest==3
     
     % a system-wide tilt around elevation-axis.
+    
+    alpha=0; %for tests
+    beta=0;
     
     dM1M2 = 6628-472; % =6156, in mm (zemax has 6156.2006)
     dM1Cam = 5336-1938; % = 3398 in mm (zemax has 3398.6)
@@ -56,9 +61,7 @@ elseif iTest==3
     M3Motion = [0 -dM3EL*sin(angleRad)*1000 -dM3EL*(1-cos(angleRad))*1000 angleAS 0 0];
     CamMotion = [0 -dCamEL*sin(angleRad)*1000 -dCamEL*(1-cos(angleRad))*1000 angleAS 0 0];
     vx = [M1Motion M2Motion M3Motion CamMotion]';
-    
-    alpha=0; %for tests
-    beta=0;
+
 elseif iTest==4
     
     % a system-wide tilt around elevation-axis.
@@ -98,9 +101,8 @@ elseif iTest ==5 % FEA output from Christoph
 
     M1Motion = [m1m3Trans*1e6 m1m3Rot/pi*180*3600]; 
     M2Motion = [m2Trans*1e6 m2Rot/pi*180*3600];
-    M3Motion = M1Motion;
     CamMotion = [cameraTrans*1e6 cameraRot/pi*180*3600];
-    vxCG = [M1Motion M2Motion M3Motion CamMotion]';
+    vxCG = [M1Motion M2Motion CamMotion]';
 
     vx = shift_CG2Vtx(vxCG);
 
