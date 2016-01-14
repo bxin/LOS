@@ -5,7 +5,7 @@ LineofSight_Test.m 		demonstrate how to use the code.
 LineofSight.m			main code that takes the output of make_4x4_TCRS.m and 
 				calculates the LOS
 make_4x4_TCRS.m			creates the 4x4 operation matrices for each optic, using 
-				its [dz dx dy Rx Ry Rz]
+				its [dx dy dz Rx Ry Rz]
 make_LOS_senM.m			creates the optical sensitivity matrix that conforms with 
 				the format of the master (16x16) operation matrix
 
