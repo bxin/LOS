@@ -2,9 +2,9 @@ function [QM1, QM2, QM3, QCam] = make_4x4_TCRS(vx)
 
 for i=1:4 % for M1,M2,M3,Cam
     
-    dz=vx((i-1)*6+1);
-    dx=vx((i-1)*6+2);
-    dy=vx((i-1)*6+3);
+    dx=vx((i-1)*6+1);
+    dy=vx((i-1)*6+2);
+    dz=vx((i-1)*6+3);
     tx=vx((i-1)*6+4)/3600/180*pi; %convert from arcsec to radian
     ty=vx((i-1)*6+5)/3600/180*pi; %convert from arcsec to radian
     tz=vx((i-1)*6+6)/3600/180*pi; %convert from arcsec to radian
