@@ -88,7 +88,7 @@ elseif iTest==4
     
 elseif iTest ==5 % FEA output from Christoph
 
-    load('christoph/deformedTelescopeElevationOnly');
+    load('FEAdata/deformedTelescopeElevationOnly');
     
     %Note: in the current FEA, the telescope pointing is a negative x-rotation from the zenith pointing.
     % so this is really -45 elevation angle, rather than +45 elevation angle.  
@@ -125,7 +125,7 @@ elseif iTest ==5 % FEA output from Christoph
     CamMotionC = [(e*[0 -dCamEL*sin(angleRad)*1000 -dCamEL*(1-cos(angleRad))*1000]')' angleAS 0 0];
 
 elseif iTest ==6 % FEA output from Christoph %same as iTest=5, but we use matrix form below
-    load('christoph/deformedTelescopeElevationOnly');
+    load('FEAdata/deformedTelescopeElevationOnly');
     
     %Note: in the current FEA, the telescope pointing is a negative x-rotation from the zenith pointing.
     % so this is really -45 elevation angle, rather than +45 elevation angle.  
