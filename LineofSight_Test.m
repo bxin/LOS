@@ -1,6 +1,20 @@
 function [] = LineofSight_Test(iTest)
 
-%iTest = 1, 2   for two test examples
+% with telescope pointing at zenith
+%iTest = 1: move all optics (as defined by Zemax, as opposed to FEA dummy mass) along y for 1um
+%           tests along x and z can be easily done by uncommenting the commented lines
+%iTest = 2: tilt all optics (as defined by Zemax, as opposed to FEA dummy mass) around 
+%           x-axis of TCRS for 1 arcsec
+%iTest = 3: tilt all optics (as defined by Zemax, as opposed to FEA dummy mass) around 
+%           x-axis of ECRS for 1 arcsec
+
+% now at 45 deg zenith angle
+%iTest = 4: tilt all optics (as defined by Zemax, as opposed to FEA dummy mass) around 
+%           x-axis of ECRS for 1 arcsec
+%iTest = 5: tilt all optics (defined as FEA dummy mass) around 
+%           x-axis of ECRS for 1 arcsec. The input is from FEA
+%iTest = 6: Same as 5. But here we derive the 2x18 matrix, so that LOS=LOSM*vxCG;
+
 
 %% test input #1
 % this is an example 24x1 x-vector, dy=1um for all 4 optical elements
@@ -107,22 +121,22 @@ elseif iTest ==5 % FEA output from Christoph
 
     vx = shift_CG2Vtx(vxCG);
 
-    %% independently check FEA output
-    dM1M2 = 6628-472; % =6156, in mm (zemax has 6156.2006)
-    dM1Cam = 5336-1938; % = 3398 in mm (zemax has 3398.6)
-    dM1M3 = -233.8; %in mm
-    dM1EL = -1895;
-    dM2EL = dM1EL + dM1M2;
-    dM3EL = dM1EL + dM1M3;
-    dCamEL = dM1EL + dM1Cam;
-    
-    angleDEG = angleAS/3600;
-    angleRad= angleDEG/180*pi; %angle in radian
-    e = [1 0 0; 0 cos(beta/180*pi) -sin(beta/180*pi); 0 sin(beta/180*pi) cos(beta/180*pi)];
-    M1MotionC = [(e*[0 -dM1EL*sin(angleRad)*1000 -dM1EL*(1-cos(angleRad))*1000]')' angleAS 0 0];
-    M2MotionC = [(e*[0 -dM2EL*sin(angleRad)*1000 -dM2EL*(1-cos(angleRad))*1000]')' angleAS 0 0];
-    M3MotionC = [(e*[0 -dM3EL*sin(angleRad)*1000 -dM3EL*(1-cos(angleRad))*1000]')' angleAS 0 0];
-    CamMotionC = [(e*[0 -dCamEL*sin(angleRad)*1000 -dCamEL*(1-cos(angleRad))*1000]')' angleAS 0 0];
+    %% independently check FEA output, not really needed
+    %     dM1M2 = 6628-472; % =6156, in mm (zemax has 6156.2006)
+    %     dM1Cam = 5336-1938; % = 3398 in mm (zemax has 3398.6)
+    %     dM1M3 = -233.8; %in mm
+    %     dM1EL = -1895;
+    %     dM2EL = dM1EL + dM1M2;
+    %     dM3EL = dM1EL + dM1M3;
+    %     dCamEL = dM1EL + dM1Cam;
+    %
+    %     angleDEG = angleAS/3600;
+    %     angleRad= angleDEG/180*pi; %angle in radian
+    %     e = [1 0 0; 0 cos(beta/180*pi) -sin(beta/180*pi); 0 sin(beta/180*pi) cos(beta/180*pi)];
+    %     M1MotionC = [(e*[0 -dM1EL*sin(angleRad)*1000 -dM1EL*(1-cos(angleRad))*1000]')' angleAS 0 0];
+    %     M2MotionC = [(e*[0 -dM2EL*sin(angleRad)*1000 -dM2EL*(1-cos(angleRad))*1000]')' angleAS 0 0];
+    %     M3MotionC = [(e*[0 -dM3EL*sin(angleRad)*1000 -dM3EL*(1-cos(angleRad))*1000]')' angleAS 0 0];
+    %     CamMotionC = [(e*[0 -dCamEL*sin(angleRad)*1000 -dCamEL*(1-cos(angleRad))*1000]')' angleAS 0 0];
 
 elseif iTest ==6 % FEA output from Christoph %same as iTest=5, but we use matrix form below
     load('FEAdata/deformedTelescopeElevationOnly');
@@ -151,8 +165,8 @@ if iTest<=5
 else
     LOSM = LOS_matrix(alpha,beta);
     LOS = LOSM * vxCG;
-    LOSx = double(LOS(1));
-    LOSy = double(LOS(2));
+    LOSx = LOS(1);
+    LOSy = LOS(2);
 end
 
 fprintf('angle in arcsec: %6.3f\nLoS = (%6.3f, %6.3f) arcsec\n',angleAS, LOSx, LOSy);

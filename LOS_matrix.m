@@ -68,6 +68,6 @@ camrz =0;
 alpha = alphanum;
 beta = betanum;
 
-LOSMnum = subs(LOSM);
+LOSMnum = double(subs(LOSM));
 
 end
