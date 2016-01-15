@@ -87,13 +87,14 @@ elseif iTest==4
     vx = [M1Motion M2Motion M3Motion CamMotion]';
     
 elseif iTest ==5 % FEA output from Christoph
-    load('christoph/undeformedTelescope45');
+
+    load('christoph/deformedTelescopeElevationOnly');
+    
+    %Note: in the current FEA, the telescope pointing is a negative x-rotation from the zenith pointing.
+    % so this is really -45 elevation angle, rather than +45 elevation angle.  
     alpha=asin(mirrorAxis(1))/pi*180;
     beta = -acos(mirrorAxis(3))/pi*180;
-    %Note: in the current FEA, the telescope pointing is a negative x-rotation from the zenith pointing.
-    % so this is really -45 elevation angle, rather than +45 elevation angle.
     
-    load('christoph/deformedTelescopeElevationOnly');
     angleAS = elevationRotAS;
 
     %original: dx dy dz in meter, Rx,Ry,Rz in Rad
@@ -123,13 +124,36 @@ elseif iTest ==5 % FEA output from Christoph
     M3MotionC = [(e*[0 -dM3EL*sin(angleRad)*1000 -dM3EL*(1-cos(angleRad))*1000]')' angleAS 0 0];
     CamMotionC = [(e*[0 -dCamEL*sin(angleRad)*1000 -dCamEL*(1-cos(angleRad))*1000]')' angleAS 0 0];
 
+elseif iTest ==6 % FEA output from Christoph %same as iTest=5, but we use matrix form below
+    load('christoph/deformedTelescopeElevationOnly');
+    
+    %Note: in the current FEA, the telescope pointing is a negative x-rotation from the zenith pointing.
+    % so this is really -45 elevation angle, rather than +45 elevation angle.  
+    alpha=asin(mirrorAxis(1))/pi*180;
+    beta = -acos(mirrorAxis(3))/pi*180;
+    
+    angleAS = elevationRotAS;
+
+    %original: dx dy dz in meter, Rx,Ry,Rz in Rad
+    % new: dx dy dz in um, Rx, Ry, Rz in arcsec
+
+    M1Motion = [m1m3Trans*1e6 m1m3Rot/pi*180*3600]; 
+    M2Motion = [m2Trans*1e6 m2Rot/pi*180*3600];
+    CamMotion = [cameraTrans*1e6 cameraRot/pi*180*3600];
+    vxCG = [M1Motion M2Motion CamMotion]';
+
 end
 
-%% coordinate transforms
+if iTest<=5
 
-
-[QM1, QM2, QM3, QCam] = make_4x4_TCRS(vx);
-[LOSx, LOSy] = LineofSight(alpha, beta, QM1, QM2, QM3, QCam);
+    [QM1, QM2, QM3, QCam] = make_4x4_TCRS(vx);
+    [LOSx, LOSy] = LineofSight(alpha, beta, QM1, QM2, QM3, QCam);
+else
+    LOSM = LOS_matrix(alpha,beta);
+    LOS = LOSM * vxCG;
+    LOSx = double(LOS(1));
+    LOSy = double(LOS(2));
+end
 
 fprintf('angle in arcsec: %6.3f\nLoS = (%6.3f, %6.3f) arcsec\n',angleAS, LOSx, LOSy);
 
