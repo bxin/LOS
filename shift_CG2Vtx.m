@@ -6,7 +6,8 @@ function vxnew = shift_CG2Vtx(vx, mysym)
 if nargin<2
     mysym = 0;
 end
-load('FEAdata/undeformedTelescope45');
+%load('FEAdata/deformedTelescope45');
+load('FEAdata/deformedTelescopeElevationOnly.mat');
 
 % how much the optical vertex is above the CG mass, for M1,M2,M3,Cam
 m1m3CGz = (m1m3Pos(3)-altitudeCenter(3))*sqrt(2)*1000; %in mm
