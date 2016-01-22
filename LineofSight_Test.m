@@ -214,7 +214,16 @@ elseif iTest ==5 % FEA output from Christoph
     %     M2MotionC = [(e*[0 -dM2EL*sin(angleRad)*1000 -dM2EL*(1-cos(angleRad))*1000]')' angleAS 0 0];
     %     M3MotionC = [(e*[0 -dM3EL*sin(angleRad)*1000 -dM3EL*(1-cos(angleRad))*1000]')' angleAS 0 0];
     %     CamMotionC = [(e*[0 -dCamEL*sin(angleRad)*1000 -dCamEL*(1-cos(angleRad))*1000]')' angleAS 0 0];
+    %     plot(vx-[M1MotionC M2MotionC M3MotionC CamMotionC]');
     
+    % another check
+    %     a=cameraPos-m1m3Pos;
+    %     a1=cameraPos+cameraTrans-(m1m3Pos+m1m3Trans);
+    %     fprintf('%6.4f vs %6.4f\n',elevationRotAS, acos(sum(a.*a1)/sqrt(sum(a.^2)*sum(a1.^2)))/pi*180*3600);
+    %     a=m2Pos-m1m3Pos;
+    %     a1=m2Pos+m2Trans-(m1m3Pos+m1m3Trans);
+    %     fprintf('%6.4f vs %6.4f\n',elevationRotAS, acos(sum(a.*a1)/sqrt(sum(a.^2)*sum(a1.^2)))/pi*180*3600);
+
 elseif iTest ==15 % FEA output from Christoph
 
     load('FEAdata/deformedTelescopeAzimuthOnly');
@@ -245,7 +254,7 @@ elseif iTest ==15 % FEA output from Christoph
     %     dM3EL = dM1EL + dM1M3;
     %     dCamEL = dM1EL + dM1Cam;
     %
-    %     angleDEG = angleAS/3600;
+    %     angleDEG = -angleAS/3600;
     %     angleRad= angleDEG/180*pi; %angle in radian
     %     M1MotionC = [dM1EL*sin(angleRad)*1000*sqrt(2)/2 -dM1EL*(1-cos(angleRad))*1000*sqrt(2)/2 0 0 0 angleAS];
     %     M2MotionC = [dM2EL*sin(angleRad)*1000*sqrt(2)/2 -dM2EL*(1-cos(angleRad))*1000*sqrt(2)/2 0 0 0 angleAS];
@@ -309,7 +318,7 @@ else
     LOSy = LOS(2);
 end
 
-fprintf('angle in arcsec: %6.3f\nLoS = (%6.3f, %6.3f) arcsec\n',angleAS, LOSx, LOSy);
+fprintf('angle in arcsec: %6.4f\nLoS = (%6.4f, %6.4f) arcsec\n',angleAS, LOSx, LOSy);
 
 end
 

@@ -8,12 +8,11 @@ if nargin<4
 end
 load('FEAdata/undeformedTelescope45');
 
-% how much the optical vertex is above the CG mass, for M1,M2,M3,Cam
-m1m3CGz = (m1m3Pos(3)-altitudeCenter(3))*sqrt(2)*1000; %in mm
-m2CGz = (m2Pos(3)-altitudeCenter(3))*sqrt(2)*1000;
-CamCGz = (cameraPos(3)-altitudeCenter(3))*sqrt(2)*1000;
+stickTopz = [-1895 6156-1895 -1895-233.8 3398-1895]*1000;%in um
 
-stickLen = [-1895-m1m3CGz 6156-1895-m2CGz -1895-233.8-m1m3CGz 3398-1895-CamCGz]*1000;%in um
+ea = [cos(alpha/180*pi) -sin(alpha/180*pi) 0; sin(alpha/180*pi) cos(alpha/180*pi) 0; 0 0 1];
+ez = [1 0 0; 0 cos(beta/180*pi) -sin(beta/180*pi); 0 sin(beta/180*pi) cos(beta/180*pi)];
+    
 if mysym == 1
     vxnew = sym('vx',[length(vx) 1]);
 else
@@ -42,10 +41,16 @@ for i=1:4 % for M1, M2, M3, Cam
     Ry = [1 0 tRy; 0 1 0; -tRy 0 1];
     Rz = [1 -tRz 0; tRz 1 0; 0 0 1];
         
-    ea = [cos(alpha/180*pi) -sin(alpha/180*pi) 0; sin(alpha/180*pi) cos(alpha/180*pi) 0; 0 0 1];
-    ez = [1 0 0; 0 cos(beta/180*pi) -sin(beta/180*pi); 0 sin(beta/180*pi) cos(beta/180*pi)];
-
-    stick = ea*ez*[0 0 stickLen(i)]';
+    if i==1 %M1
+        stick = ea*ez*[0 0 stickTopz(i)]'-(m1m3Pos - altitudeCenter)'*1e6;
+    elseif i==2 %M2
+        stick = ea*ez*[0 0 stickTopz(i)]'-(m2Pos - altitudeCenter)'*1e6 ;
+    elseif i==3 %M3
+        stick = ea*ez*[0 0 stickTopz(i)]'-(m1m3Pos - altitudeCenter)'*1e6;
+    elseif i==4 %Cam
+        stick = ea*ez*[0 0 stickTopz(i)]'-(cameraPos - altitudeCenter)'*1e6;
+    end
+    
     vxnew((i-1)*6+1:(i-1)*6+3) = vx((i-1)*6+1:(i-1)*6+3)+(Rx*Ry*Rz-eye(3))*stick;
     
 end
