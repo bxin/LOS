@@ -71,7 +71,7 @@ for i=1:4
 end
 Qfinal = blkdiag(QM1,QM2,QM3,QCam);
 
-LOSx = sum(sum(Qfinal.*SxFinal));
+LOSx = -sum(sum(Qfinal.*SxFinal)); %by convention, clockwise rotation around z is positive azimuth angle
 LOSy = sum(sum(Qfinal.*SyFinal));
 
 end

@@ -1,9 +1,9 @@
-function vxnew = shift_CG2Vtx(vx, mysym)
+function vxnew = shift_CG2Vtx(vx, alpha, beta, mysym)
 
 %input is the coordinates of the CG (dummy mass) in the TCRS
 %output is the cooridinates of the optical vertices (pivoting points as defined in ZCRS) in the TCRS
 
-if nargin<2
+if nargin<4
     mysym = 0;
 end
 load('FEAdata/undeformedTelescope45');
@@ -42,7 +42,10 @@ for i=1:4 % for M1, M2, M3, Cam
     Ry = [1 0 tRy; 0 1 0; -tRy 0 1];
     Rz = [1 -tRz 0; tRz 1 0; 0 0 1];
         
-    stick = [0 0 stickLen(i)]';
+    ea = [cos(alpha/180*pi) -sin(alpha/180*pi) 0; sin(alpha/180*pi) cos(alpha/180*pi) 0; 0 0 1];
+    ez = [1 0 0; 0 cos(beta/180*pi) -sin(beta/180*pi); 0 sin(beta/180*pi) cos(beta/180*pi)];
+
+    stick = ea*ez*[0 0 stickLen(i)]';
     vxnew((i-1)*6+1:(i-1)*6+3) = vx((i-1)*6+1:(i-1)*6+3)+(Rx*Ry*Rz-eye(3))*stick;
     
 end

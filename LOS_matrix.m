@@ -7,7 +7,7 @@ vxCG=transpose([m1m3dx m1m3dy m1m3dz m1m3rx m1m3ry m1m3rz ...
     m2dx m2dy m2dz m2rx m2ry m2rz ...
     camdx camdy camdz camrx camry camrz]);
 
-vx = shift_CG2Vtx(vxCG,1);
+vx = shift_CG2Vtx(vxCG,alphanum, betanum, 1);
 [QM1, QM2, QM3, QCam] = make_4x4_TCRS(vx);
 
 alpha=sym('alpha');
