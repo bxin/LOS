@@ -10,3 +10,4 @@ make_LOS_senM.m			creates the optical sensitivity matrix that conforms with
 				the format of the master (16x16) operation matrix
 
 data/RB_sensitivities.mat	rigid body optical sensitivity matrix (extracted from Zemax)
+data/LOSM_matrix45.mat		LOS matrix for 45 deg elevation angle
