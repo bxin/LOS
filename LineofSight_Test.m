@@ -165,7 +165,7 @@ elseif iTest==14
     dM3EL = dM1EL + dM1M3;
     dCamEL = dM1EL + dM1Cam;
     
-    angleAS = 1; %angle in arcsec
+    angleAS = 1; %*3600*3.5; %angle in arcsec
     angleDEG = angleAS/3600;
     angleRad= angleDEG/180*pi; %angle in radian
     M1Motion = [dM1EL*sin(angleRad)*1000*sqrt(2)/2 -dM1EL*(1-cos(angleRad))*1000*sqrt(2)/2 0 0 0 angleAS];
