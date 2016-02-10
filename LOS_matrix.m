@@ -1,5 +1,8 @@
 function LOSMnum = LOS_matrix(alphanum, betanum)
 
+% author: Bo Xin (bxin@lsst.org)
+%         Large Synoptic Survey Telescope, Tucson, AZ 85719
+
 syms m1m3dx m1m3dy m1m3dz m1m3rx m1m3ry m1m3rz
 syms m2dx m2dy m2dz m2rx m2ry m2rz
 syms camdx camdy camdz camrx camry camrz

@@ -1,5 +1,8 @@
 function [QM1, QM2, QM3, QCam] = make_4x4_TCRS(vx)
 
+% author: Bo Xin (bxin@lsst.org)
+%         Large Synoptic Survey Telescope, Tucson, AZ 85719
+
 for i=1:4 % for M1,M2,M3,Cam
     
     dx=vx((i-1)*6+1);

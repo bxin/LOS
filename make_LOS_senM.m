@@ -1,5 +1,8 @@
 function [SxFinal, SyFinal] = make_LOS_senM()
 
+% author: Bo Xin (bxin@lsst.org)
+%         Large Synoptic Survey Telescope, Tucson, AZ 85719
+
 %% construct sensitivity matrix that can be multiplied with Qfinal
 %load senM, unit is um/um or um/arcsec
 load data/RB_sensitivities

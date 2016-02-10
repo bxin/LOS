@@ -1,5 +1,8 @@
 function [] = LineofSight_Test(iTest)
 
+% author: Bo Xin (bxin@lsst.org)
+%         Large Synoptic Survey Telescope, Tucson, AZ 85719
+
 % with telescope pointing at zenith
 %iTest = 1: move all optics (as defined by Zemax, as opposed to FEA dummy mass) along y for 1um
 %           tests along x and z can be easily done by uncommenting the commented lines
@@ -182,7 +185,8 @@ elseif iTest ==5 % FEA output from Christoph
     load('FEAdata/deformedTelescopeElevationOnly');
     
     %Note: in the current FEA, the telescope pointing is a negative x-rotation from the zenith pointing.
-    % so this is really -45 elevation angle, rather than +45 elevation angle.  
+    % this is obvious if we look at the undeformed FEA mat data files.
+    % so this is really -45 elevation angle, rather than +45 elevation angle.
     alpha=asin(mirrorAxis(1))/pi*180;
     beta = -acos(mirrorAxis(3))/pi*180;
     

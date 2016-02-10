@@ -1,5 +1,8 @@
 function [LOSx, LOSy] = LineofSight(alpha, beta, QM1, QM2, QM3, QCam)
 
+% author: Bo Xin (bxin@lsst.org)
+%         Large Synoptic Survey Telescope, Tucson, AZ 85719
+
 % LINEOFSIGHT calculates the line of sight deviation from the overall 
 % sensitivity matrix senM
 
