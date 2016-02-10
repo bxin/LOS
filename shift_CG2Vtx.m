@@ -9,7 +9,7 @@ function vxnew = shift_CG2Vtx(vx, alpha, beta, mysym)
 if nargin<4
     mysym = 0;
 end
-load('FEAdata/undeformedTelescope45');
+load('data/undeformedTelescope45');
 
 stickTopz = [-1895 6156-1895 -1895-233.8 3398-1895]*1000;%in um
 

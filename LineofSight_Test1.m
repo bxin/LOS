@@ -1,4 +1,4 @@
-function [] = LineofSight_Test1(elev,azTorque,elTorque, matrixForm, instant)
+function [] = LineofSight_Test1(elev,azTorque,elTorque, matrixForm, instant, outMatrix)
 
 % author: Bo Xin (bxin@lsst.org)
 %         Large Synoptic Survey Telescope, Tucson, AZ 85719
@@ -9,16 +9,23 @@ function [] = LineofSight_Test1(elev,azTorque,elTorque, matrixForm, instant)
 % elTorque = 0 or 1
 % matrix form = 1 or 0
 % instant = 1 (work with 5001 instances) or 0 (work only with the last instance)
-        
+% outMatrix is the name of the desired filename for the LOS matrix output
+%           use '' if no output is desired.
+
+% example usage:
+%  LineofSight_Test1(45,1,1,1,0,'')
+%  LineofSight_Test1(15,1,1,1,0,'')
+%  LineofSight_Test1(86.5,1,1,1,0,'')
+
 % LineofSight_Test1(x,x,x,0,0) doesn't work, not yet implemented.
 
 azTorque = azTorque*1000;
 elTorque = elTorque*1000;
 if elev==86.5
-    load(sprintf('FEAdata/deg%4.1f/stepResponseTestData%4.1f El Torque %dNm Az Torque %dNm.mat', ...
+    load(sprintf('testData/deg%4.1f/stepResponseTestData%4.1f El Torque %dNm Az Torque %dNm.mat', ...
         elev, elev, elTorque, azTorque));
 else
-    load(sprintf('FEAdata/deg%d/stepResponseTestData%d El Torque %dNm Az Torque %dNm', ...
+    load(sprintf('testData/deg%d/stepResponseTestData%d El Torque %dNm Az Torque %dNm', ...
         elev, elev, elTorque, azTorque));
 end
 
@@ -69,7 +76,7 @@ if ~matrixForm
 %     plot(1:24,vx,'-r', 1:24,[M1MotionC M2MotionC M3MotionC CamMotionC]','-k');
 %     
 %     % another check
-%     load('FEAdata/undeformedTelescope15.mat');
+%     load('testData/undeformedTelescope15.mat');
 %     a=cameraPos-m1m3Pos;
 %     cameraTrans = testData(end,13:15);
 %     m1m3Trans = testData(end,1:3);

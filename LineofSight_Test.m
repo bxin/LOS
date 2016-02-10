@@ -182,7 +182,7 @@ elseif iTest==14
         
 elseif iTest ==5 % FEA output from Christoph
 
-    load('FEAdata/deformedTelescopeElevationOnly');
+    load('testData/deformedTelescopeElevationOnly');
     
     %Note: in the current FEA, the telescope pointing is a negative x-rotation from the zenith pointing.
     % this is obvious if we look at the undeformed FEA mat data files.
@@ -230,7 +230,7 @@ elseif iTest ==5 % FEA output from Christoph
 
 elseif iTest ==15 % FEA output from Christoph
 
-    load('FEAdata/deformedTelescopeAzimuthOnly');
+    load('testData/deformedTelescopeAzimuthOnly');
     
     %Note: in the current FEA, the telescope pointing is a negative x-rotation from the zenith pointing.
     % so this is really -45 elevation angle, rather than +45 elevation angle.  
@@ -270,7 +270,7 @@ elseif iTest ==15 % FEA output from Christoph
     angleAS = angleAS * sqrt(2)/2;
 
 elseif iTest ==6 % FEA output from Christoph %same as iTest=5, but we use matrix form below
-    load('FEAdata/deformedTelescopeElevationOnly');
+    load('testData/deformedTelescopeElevationOnly');
     
     %Note: in the current FEA, the telescope pointing is a negative x-rotation from the zenith pointing.
     % so this is really -45 elevation angle, rather than +45 elevation angle.  
@@ -288,7 +288,7 @@ elseif iTest ==6 % FEA output from Christoph %same as iTest=5, but we use matrix
     vxCG = [M1Motion M2Motion CamMotion]';
     
 elseif iTest ==16 % FEA output from Christoph %same as iTest=5, but we use matrix form below
-    load('FEAdata/deformedTelescopeAzimuthOnly');
+    load('testData/deformedTelescopeAzimuthOnly');
     
     %Note: in the current FEA, the telescope pointing is a negative x-rotation from the zenith pointing.
     % so this is really -45 elevation angle, rather than +45 elevation angle.  
