@@ -10,7 +10,7 @@ This code demostrates how to calculate the Line of Sight (LOS) change using
 [dx dy dz Rx Ry Rz] for M1, M2, M3, Cam in the Terrestrial Coordinate System.
 A user also has the option to output the Line of Sight Matrix (LOSM) for later use.
 
-The code is in Matlab. Creating and outputing the sensitivity matrix requires the Matlab Symbolic Math Toolbox.
+The code is in Matlab. Creating and outputing the sensitivity matrix requires the Matlab Symbolic Math Toolbox. Once the LOSM is created, no special Matlab toolbox is required.
 
 Once the LOSM is created, the LOS change can be calculated
     	 LOS = LOSM * Vcg
