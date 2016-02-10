@@ -47,7 +47,8 @@ make_4x4_TCRS.m			creates the 4x4 operation matrices for each optic, using
 make_LOS_senM.m			creates the optical sensitivity matrix that conforms with 
 				the format of the master (16x16) operation matrix
 shift_CG2Vtx.m			this routines converts the 18-element center-of-gravity
-				     displacement vector into the displacement vector of the optical vertices.
+				    displacement vector into the displacement vector of
+				    the optical vertices.
 LOS_matrix.m			this routine calls LineofSight.m, and rearrange
 				the calculations into a matrix multiplication.
 
