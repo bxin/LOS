@@ -1,13 +1,58 @@
-This code calculates the Line of Sight (LOS) change using 
-[dx dy dz Rx Ry Rz] for M1, M2, M3, Cam in the Terrestrial Coordinate System.
+------------------------------------------------------------
+% author: Bo Xin (bxin@lsst.org)
+%         Large Synoptic Survey Telescope, Tucson, AZ 85719
 
-LineofSight_Test.m 		demonstrate how to use the code. 
+% The test data are provided by Christoph Dribusch.
+------------------------------------------------------------
+
+
+This code demostrates how to calculate the Line of Sight (LOS) change using 
+[dx dy dz Rx Ry Rz] for M1, M2, M3, Cam in the Terrestrial Coordinate System.
+A user also has the option to output the Line of Sight Matrix (LOSM) for later use.
+
+The code is in Matlab. Creating and outputing the sensitivity matrix requires the Matlab Symbolic Math Toolbox.
+
+Once the LOSM is created, the LOS change can be calculated
+    	 LOS = LOSM * Vcg
+LOSM is the Line of Sight Matrix, which can be created using instructions below.
+Vcg is the center-of-gravity displacements of the M1M3, M2, and the Camera.
+LOSM is a 2x18 matrix. Vcg is a 18-element vector, whose elements are
+[M1M3dx, M1M3dy, M1M3dz, M1M3Rx, M1M3Ry, M1M3Rz,
+M2dx, M2dy, M2dz, M2Rx, M2Ry, M2Rz,
+Camdx, Camdy, Camdz, CamRx, CamRy, CamRz]
+The units should be microns for translations, and arcseconds for rotations.
+LOS is a 2-element vector. The unit is arcsecond.
+
+To create LOSM for 15/45/86.5 degree elevation angle, run
+   	  LineofSight_Test1(45,1,1,1,0,'simulink/LOSM_matrix45.mat')
+	  LineofSight_Test1(15,1,1,1,0,'simulink/LOSM_matrix15.mat')
+	  LineofSight_Test1(86.5,1,1,1,0,'simulink/LOSM_matrix86.5.mat')
+The last argument can be any file name a user wants to use. It is in Matlab format.
+
+For users' convenience, the LOSM matrices for 15/45/86.5 degrees are generated and included in the repo.
+data/LOSM_matrix45.mat		LOS matrix for 45 deg elevation angle
+data/LOSM_matrix15.mat		LOS matrix for 15 deg elevation angle
+data/LOSM_matrix86.5.mat		LOS matrix for 86.5 deg elevation angle
+
+-------------------
+Files in top level:
+-------------------
+
+LineofSight_Test.m 		demonstrate how to use the code. See inline comments
+LineofSight_Test1.m 		demonstrate how to use the code. See inline comments
 LineofSight.m			main code that takes the output of make_4x4_TCRS.m and 
 				calculates the LOS
 make_4x4_TCRS.m			creates the 4x4 operation matrices for each optic, using 
 				its [dx dy dz Rx Ry Rz]
 make_LOS_senM.m			creates the optical sensitivity matrix that conforms with 
 				the format of the master (16x16) operation matrix
+shift_CG2Vtx.m			this routines converts the 18-element center-of-gravity displacement vector into the displacement vector of the optical vertices.
+LOS_matrix.m			this routine calls LineofSight.m, and rearrange the calculations into a matrix multiplication.
 
-data/RB_sensitivities.mat	rigid body optical sensitivity matrix (extracted from Zemax)
-data/LOSM_matrix45.mat		LOS matrix for 45 deg elevation angle
+------------
+Directories:
+------------
+
+data/		contains rigid body optical sensitivity matrix (extracted from Zemax) and data about the geometry of the undeformed telescope.
+simulink/	 contains data to be linked to the simulink model.
+testData/	 data used for testing the code. These are data from our FEA model.
