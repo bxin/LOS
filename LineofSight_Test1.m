@@ -13,11 +13,15 @@ function [] = LineofSight_Test1(elev,azTorque,elTorque, matrixForm, instant, out
 %           use '' if no output is desired.
 
 % example usage:
-%  LineofSight_Test1(45,1,1,1,0,'')
-%  LineofSight_Test1(15,1,1,1,0,'')
-%  LineofSight_Test1(86.5,1,1,1,0,'')
+%  LineofSight_Test1(45,1,1,1,0,'simulink/LOSM_matrix45.mat')
+%  LineofSight_Test1(15,1,1,1,0,'simulink/LOSM_matrix15.mat')
+%  LineofSight_Test1(86.5,1,1,1,0,'simulink/LOSM_matrix86.5.mat')
 
 % LineofSight_Test1(x,x,x,0,0) doesn't work, not yet implemented.
+
+if nargin<6
+    outMatrix = '';
+end
 
 azTorque = azTorque*1000;
 elTorque = elTorque*1000;
@@ -93,6 +97,9 @@ if ~matrixForm
 
 else
     LOSM = LOS_matrix(alpha,beta);
+    if ~isempty(outMatrix)
+        save(outMatrix,'LOSM');
+    end
     LOS = LOSM * vxCG;
     LOSx = LOS(1,:);
     LOSy = LOS(2,:);
