@@ -28,6 +28,7 @@ To create LOSM for 15/45/86.5 degree elevation angles, run
 	  LineofSight_Test1(15,1,1,1,0,'simulink/LOSM_matrix15.mat')
 	  LineofSight_Test1(86.5,1,1,1,0,'simulink/LOSM_matrix86.5.mat')
 The last argument can be any file name a user wants to use. The file needs to be in Matlab format.
+The above commands will also run some tests where the input data are the output of the LSST FEA model. The output plots show the nice agreements between the encoder readings and our LOS calculations.
 
 For users' convenience, the LOSM matrices for 15/45/86.5 degrees are generated and included in the repo.
 simulink/LOSM_matrix45.mat		LOS matrix for 45 deg elevation angle
