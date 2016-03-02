@@ -91,9 +91,6 @@ elseif iTest==12
     CamMotion = [dCamAZ*sin(angleRad)*1000 0 -dCamAZ*(1-cos(angleRad))*1000 0 angleAS 0];
     vx = [M1Motion M2Motion M3Motion CamMotion]';
         
-    %by convention, clockwise rotation around z is positive azimuth angle
-    angleAS = -angleAS;
-    
 elseif iTest==22
     % azimuth rotation around z-axis
     alpha=0; %for tests
@@ -177,18 +174,23 @@ elseif iTest==14
     CamMotion = [dCamEL*sin(angleRad)*1000*sqrt(2)/2 -dCamEL*(1-cos(angleRad))*1000*sqrt(2)/2 0 0 0 angleAS];
     vx = [M1Motion M2Motion M3Motion CamMotion]';
     
-    %by convention, clockwise rotation around z is positive azimuth angle
-    angleAS = -angleAS*sqrt(2)/2;
+    angleAS = angleAS*sqrt(2)/2;
         
 elseif iTest ==5 % FEA output from Christoph
 
     load('testData/deformedTelescopeElevationOnly');
     
-    %Note: in the current FEA, the telescope pointing is a negative x-rotation from the zenith pointing.
-    % this is obvious if we look at the undeformed FEA mat data files.
-    % so this is really -45 elevation angle, rather than +45 elevation angle.
     alpha=asin(mirrorAxis(1))/pi*180;
-    beta = -acos(mirrorAxis(3))/pi*180;
+    beta = acos(mirrorAxis(3))/pi*180;
+    
+    % FEA outputs are not updated to r5 yet
+    elevationRotAS = - elevationRotAS;
+    m1m3Trans(1:2)=-m1m3Trans(1:2);
+    m1m3Rot(1:2)=-m1m3Rot(1:2);
+    m2Trans(1:2)=-m2Trans(1:2);
+    m2Rot(1:2)=-m2Rot(1:2);
+    cameraTrans(1:2)=-cameraTrans(1:2);
+    cameraRot(1:2)=-cameraRot(1:2);
     
     angleAS = elevationRotAS;
 
@@ -232,13 +234,19 @@ elseif iTest ==15 % FEA output from Christoph
 
     load('testData/deformedTelescopeAzimuthOnly');
     
-    %Note: in the current FEA, the telescope pointing is a negative x-rotation from the zenith pointing.
-    % so this is really -45 elevation angle, rather than +45 elevation angle.  
     alpha=asin(mirrorAxis(1))/pi*180;
-    beta = -acos(mirrorAxis(3))/pi*180;
+    beta = acos(mirrorAxis(3))/pi*180;
+    
+    % FEA outputs are not updated to r5 yet
+    m1m3Trans(1:2)=-m1m3Trans(1:2);
+    m1m3Rot(1:2)=-m1m3Rot(1:2);
+    m2Trans(1:2)=-m2Trans(1:2);
+    m2Rot(1:2)=-m2Rot(1:2);
+    cameraTrans(1:2)=-cameraTrans(1:2);
+    cameraRot(1:2)=-cameraRot(1:2);
     
     angleAS = azimuthRotAS;
-
+    
     %original: dx dy dz in meter, Rx,Ry,Rz in Rad
     % new: dx dy dz in um, Rx, Ry, Rz in arcsec
 
@@ -265,17 +273,22 @@ elseif iTest ==15 % FEA output from Christoph
     %     M3MotionC = [dM3EL*sin(angleRad)*1000*sqrt(2)/2 -dM3EL*(1-cos(angleRad))*1000*sqrt(2)/2 0 0 0 angleAS];
     %     CamMotionC = [dCamEL*sin(angleRad)*1000*sqrt(2)/2 -dCamEL*(1-cos(angleRad))*1000*sqrt(2)/2 0 0 0 angleAS];
 
-    %by convention, clockwise rotation around z is positive azimuth angle
-    % FEA output already follows that convention
     angleAS = angleAS * sqrt(2)/2;
 
 elseif iTest ==6 % FEA output from Christoph %same as iTest=5, but we use matrix form below
     load('testData/deformedTelescopeElevationOnly');
     
-    %Note: in the current FEA, the telescope pointing is a negative x-rotation from the zenith pointing.
-    % so this is really -45 elevation angle, rather than +45 elevation angle.  
     alpha=asin(mirrorAxis(1))/pi*180;
-    beta = -acos(mirrorAxis(3))/pi*180;
+    beta = acos(mirrorAxis(3))/pi*180;
+    
+    % FEA outputs are not updated to r5 yet
+    elevationRotAS = - elevationRotAS;
+    m1m3Trans(1:2)=-m1m3Trans(1:2);
+    m1m3Rot(1:2)=-m1m3Rot(1:2);
+    m2Trans(1:2)=-m2Trans(1:2);
+    m2Rot(1:2)=-m2Rot(1:2);
+    cameraTrans(1:2)=-cameraTrans(1:2);
+    cameraRot(1:2)=-cameraRot(1:2);
     
     angleAS = elevationRotAS;
 
@@ -290,11 +303,18 @@ elseif iTest ==6 % FEA output from Christoph %same as iTest=5, but we use matrix
 elseif iTest ==16 % FEA output from Christoph %same as iTest=5, but we use matrix form below
     load('testData/deformedTelescopeAzimuthOnly');
     
-    %Note: in the current FEA, the telescope pointing is a negative x-rotation from the zenith pointing.
-    % so this is really -45 elevation angle, rather than +45 elevation angle.  
     alpha=asin(mirrorAxis(1))/pi*180;
-    beta = -acos(mirrorAxis(3))/pi*180;
+    beta = acos(mirrorAxis(3))/pi*180;
     
+    % FEA outputs are not updated to r5 yet
+    % azimuthRotAS = - azimuthRotAS;
+    m1m3Trans(1:2)=-m1m3Trans(1:2);
+    m1m3Rot(1:2)=-m1m3Rot(1:2);
+    m2Trans(1:2)=-m2Trans(1:2);
+    m2Rot(1:2)=-m2Rot(1:2);
+    cameraTrans(1:2)=-cameraTrans(1:2);
+    cameraRot(1:2)=-cameraRot(1:2);
+        
     angleAS = azimuthRotAS;
 
     %original: dx dy dz in meter, Rx,Ry,Rz in Rad
@@ -305,8 +325,6 @@ elseif iTest ==16 % FEA output from Christoph %same as iTest=5, but we use matri
     CamMotion = [cameraTrans*1e6 cameraRot/pi*180*3600];
     vxCG = [M1Motion M2Motion CamMotion]';
     
-    %by convention, clockwise rotation around z is positive azimuth angle
-    % FEA output already follows that convention
     angleAS = angleAS * sqrt(2)/2;
 
 end

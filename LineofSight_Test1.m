@@ -33,15 +33,10 @@ else
         elev, elev, elTorque, azTorque));
 end
 
-%by convention, clockwise rotation around z is positive azimuth angle
-% FEA output already follows that convention
 azimuthReading = azimuthReading*cos((elev)/180*pi);
 
-%Note: in the current FEA, the telescope pointing is a negative x-rotation from the zenith pointing.
-% this is obvious if we look at the undeformed FEA mat data files.
-% so the 15, 45 and 86.5 deg angles are really negative elevation angle.
 alpha=0;
-beta = -(90-elev); %beta is zenith angle, = 90 - elevation angle
+beta = (90-elev); %beta is zenith angle, = 90 - elevation angle
     
 %original: dx dy dz in meter, Rx,Ry,Rz in Rad
 % new: dx dy dz in um, Rx, Ry, Rz in arcsec
@@ -55,6 +50,13 @@ else
 end
 vxCG(:,transIDX) = vxCG(:,transIDX)*1e6;
 vxCG(:,angleIDX) = vxCG(:,angleIDX)/pi*180*3600;
+
+% FEA outputs are not updated to r5 yet
+invID = [1 2 4 5 7 8 10 11 13 14 16 17];
+vxCG(:, invID) = - vxCG(:, invID);
+% azimuthReading is unchanged because +z is the same
+% elevationReading is rotation around +x, x now = -x
+elevationReading = -elevationReading; 
 
 vxCG = transpose(vxCG);
 if ~matrixForm

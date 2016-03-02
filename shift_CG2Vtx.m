@@ -9,7 +9,9 @@ function vxnew = shift_CG2Vtx(vx, alpha, beta, mysym)
 if nargin<4
     mysym = 0;
 end
-load('data/undeformedTelescope45');
+load('data/undeformedTelescope45_r5');
+% in this coordinate system, x is into the screen, y is on screen, to the left, z is going up.
+% telescope is parked  with x=0, between the +z and -y.
 
 stickTopz = [-1895 6156-1895 -1895-233.8 3398-1895]*1000;%in um
 
@@ -18,7 +20,7 @@ ez = [1 0 0; 0 cos(beta/180*pi) -sin(beta/180*pi); 0 sin(beta/180*pi) cos(beta/1
     
 %plug alpha = 0, beta = -45 into the above, so make everything independent of undeformedTelescope45.mat
 % ea45 is a unit matrix, so ignore. To get ez45inv from ez45, reverse the sign of the angle
-ez45inv = [1 0 0; 0 cos(pi/4) -sin(pi/4); 0 sin(pi/4) cos(pi/4)];
+ez45inv = [1 0 0; 0 cos(pi/4) sin(pi/4); 0 -sin(pi/4) cos(pi/4)];
  
 if mysym == 1
     vxnew = sym('vx',[length(vx) 1]);
